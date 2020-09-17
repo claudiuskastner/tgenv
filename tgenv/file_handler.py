@@ -62,6 +62,6 @@ def check_for_wsl() -> int:
     """
     if os.path.exists("/mnt/c/Windows") or sys.platform != "linux":
         return 1
-    elif platform.system():
+    elif platform.system() == "Darwin":
         return 2
-    return 2
+    return 0

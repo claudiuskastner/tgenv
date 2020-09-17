@@ -1,6 +1,6 @@
 from github import Github
 
-from asset_downloader import download_asset
+from .asset_downloader import download_asset
 
 def get_versions(repository, git_token=""):
     """ Gets all published version of a repo

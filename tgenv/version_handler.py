@@ -1,6 +1,6 @@
 import json
 
-from file_handler import read_versions, version_file_exists, write_version, copy_file
+from .file_handler import read_versions, version_file_exists, write_version, copy_file
 
 def get_local_versions(filepath: str) -> str:
     """ Returns local versions
