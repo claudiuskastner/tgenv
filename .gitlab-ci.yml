@@ -18,6 +18,10 @@ cache:
     - .cache/pip
     - venv/
 
+include:
+  - template: Dependency-Scanning.gitlab-ci.yml
+
+
 before_script:
   - python -V  # Print out python version for debugging
   - python -m pip install -U pip
