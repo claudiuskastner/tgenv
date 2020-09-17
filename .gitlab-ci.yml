@@ -17,7 +17,7 @@ before_script:
 =======
   - python -V  # Print out python version for debugging
   - python -m pip install -U pip
-  - pip install virtualenv pylint twine
+  - pip install virtualenv pylint
   - pip install -r requirements.txt
   - virtualenv venv
   - source venv/bin/activate
