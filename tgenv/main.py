@@ -5,7 +5,7 @@ import configparser
 import os
 import re
 from git_wrapper import *
-
+from version_handler import has_version, add_version, install_version
 try:
     github_token = os.environ["GITHUB_TOKEN"]
 except KeyError as ex:
@@ -43,6 +43,7 @@ def cli(ctx, verbose, quiet):
     elif verbose:
         logger.setLevel(logging.DEBUG)
     else:
+        print("Loglevel info")
         logger.setLevel(logging.INFO)
 
 
@@ -60,14 +61,28 @@ def get_local_version():
 @click.argument("version", type=click.STRING)
 def install(ctx, version):
     if re.match(r'v+[0-9]+\.[0-9]+\.+[0-9]*', version):
-        get_release_asset(config["DEFAULT"]["tg_repository"], version, github_token)
+        if not has_version(config["DEFAULT"]["VERSION_FILE"], version):
+            # try:
+            get_release_asset(config["DEFAULT"]["tg_repository"], version, github_token)
+            add_version(version, "versions/"+ version, config["DEFAULT"]["VERSION_FILE"])
+            # except Exception as ex:
+            #     print(ex)
+        else:
+            logging.info("Version already installed")
     else:
         logging.error("Not a valid version format")
 
+@click.command(help=config["DEFAULT"]["get_remote_help"])
+@click.argument("version", type=click.STRING)
+@click.pass_context
 def use(ctx, version):
-    pass
+    if re.match(r'v+[0-9]+\.[0-9]+\.+[0-9]*', version):
+        if has_version(config["DEFAULT"]["VERSION_FILE"], version):
+            install_version(config["DEFAULT"]["BINARY_TARGET"], "tgenv/versions/" ,version)
 
 cli.add_command(list_remote)
 cli.add_command(install)
+cli.add_command(use)
+
 if __name__ == "__main__":
     cli()
