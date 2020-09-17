@@ -21,7 +21,7 @@ cache:
 before_script:
   - python -V  # Print out python version for debugging
   - python -m pip install -U pip
-  - pip install virtualenv pylint twine
+  - pip install virtualenv pylint
   - pip install -r requirements.txt
   - virtualenv venv
   - source venv/bin/activate
@@ -45,10 +45,21 @@ run:
     paths:
       - dist/*.whl
 
-publish:
+pip:
+  stage: upload
+  needs:
+    - lint
+    - runt
+    # - test
   script:
-    - python setup.py bdist_wheel bdist
-    - python -m twine upload --repository tgenv dist/*
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - python setup.py sdist
+    - dpl --provider=pypi --user=__token__ --password=${PYPI_TOKEN} --skip_existing=true
+  only:
+  - master
+
 
 # TODO: docs
 # pages:
