@@ -1,3 +1,4 @@
+#!/bin/env python3
 # pylint: disable=unused-argument,logging-not-lazy
 
 import os
@@ -8,11 +9,11 @@ import configparser
 
 import click
 
-from asset_downloader import DownloadException
-from git_wrapper import get_release_asset, get_versions
-from version_handler import has_version, add_version, install_version, get_local_versions
-from file_handler import check_files, check_for_wsl
-from console_logger_format import ConsoleLoggingFormat
+from .asset_downloader import DownloadException
+from .git_wrapper import get_release_asset, get_versions
+from .version_handler import has_version, add_version, install_version, get_local_versions
+from .file_handler import check_files, check_for_wsl
+from .console_logger_format import ConsoleLoggingFormat
 
 try:
     GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
@@ -96,7 +97,7 @@ def list_local(ctx):
     """
     versions = get_local_versions(version_file_path)
     for version in versions:
-        logger(version)
+        logger.error(version)
 
 
 @click.command(help=config["TEXT"]["INSTALL_HELP"])
