@@ -3,7 +3,12 @@
 tgenv is a Python CLI tool for managing [terragrunt](https://github.com/gruntwork-io/terragrunt/) versions.
 
 If you have any questions, any remarks or even bugs, feel free to open an issue.
-There is currently no support for windows.
+
+There is currently no or will ever be any support for windows.
+
+## Prerequisites
+
+You need python3.8 installed.
 
 ## Installation
 
