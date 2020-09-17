@@ -1,4 +1,5 @@
 #!/bin/env python3
+<<<<<<< HEAD
 
 """    This file is part of tgenv.
 
@@ -16,6 +17,8 @@
     along with tgenv.  If not, see <https://www.gnu.org/licenses/>."""
 
 
+=======
+>>>>>>> Create installable setuppy
 # pylint: disable=unused-argument,logging-not-lazy
 
 import os
