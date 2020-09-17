@@ -46,10 +46,10 @@ run:
       - dist/*.whl
 
 pip:
-  stage: upload
+  stage: deploy
   needs:
     - lint
-    - runt
+    - run
     # - test
   script:
     - apt-get update -qy
