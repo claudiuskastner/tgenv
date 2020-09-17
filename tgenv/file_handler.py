@@ -60,8 +60,9 @@ def check_files(path: str, version_file: str):
 def check_for_wsl() -> int:
     """ Checks if running on wsl
     """
+    retval = 0
     if os.path.exists("/mnt/c/Windows") or sys.platform != "linux":
-        return 1
+        retval = 1
     elif platform.system() == "Darwin":
-        return 2
-    return 0
+        retval = 2
+    return retval
