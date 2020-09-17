@@ -7,12 +7,22 @@ cache:
     - .cache/pip
 
 before_script:
+<<<<<<< HEAD
 - python -V
 - python -m pip install -U pip
 - pip install virtualenv pylint
 - pip install -r requirements.txt
 - virtualenv venv
 - source venv/bin/activate
+=======
+  - python -V  # Print out python version for debugging
+  - python -m pip install -U pip
+  - pip install virtualenv pylint twine
+  - pip install -r requirements.txt
+  - virtualenv venv
+  - source venv/bin/activate
+
+>>>>>>> Deployment
 lint:
   stage: test
   script:
