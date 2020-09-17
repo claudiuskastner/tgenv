@@ -1,6 +1,8 @@
 import os
-import shutil
+import sys
 import stat
+import shutil
+import platform
 
 def write_version(file_path: str, versions: str):
     """ Writes local available versions to a file
@@ -54,3 +56,12 @@ def check_files(path: str, version_file: str):
     if not os.path.exists(versions_file):
         with open(versions_file, 'w') as ver_file:
             ver_file.write("{}")
+
+def check_for_wsl() -> int:
+    """ Checks if running on wsl
+    """
+    if os.path.exists("/mnt/c/Windows") or sys.platform != "linux":
+        return 1
+    elif platform.system():
+        return 2
+    return 2

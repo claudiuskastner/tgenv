@@ -10,7 +10,7 @@ class ConsoleLoggingFormat(Formatter):
     WARNING_FORMAT = "\033[1;33m%(message)s\033[0m"
 
     def __init__(self):
-        Formatter.__init__(self, fmt="%(msg)s", style='%')
+        Formatter.__init__(self, fmt="\t%(msg)s", style='%')
 
     # pylint: disable=protected-access
     def format(self, record):

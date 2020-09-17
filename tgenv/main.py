@@ -2,14 +2,16 @@
 
 import os
 import re
+import random
 import logging
 import configparser
+
 import click
 
 from asset_downloader import DownloadException
 from git_wrapper import get_release_asset, get_versions
 from version_handler import has_version, add_version, install_version, get_local_versions
-from file_handler import check_files
+from file_handler import check_files, check_for_wsl
 from console_logger_format import ConsoleLoggingFormat
 
 try:
@@ -26,6 +28,8 @@ logger.addHandler(log_handler)
 config = configparser.ConfigParser()
 configuration_path = os.path.join(os.path.dirname(__file__), "res/default.conf")
 config.read(configuration_path)
+
+quotes = open(os.path.join(os.path.dirname(__file__), "res/quotes"), "r").read().splitlines()
 
 help_content = "\b" + config["TEXT"]["HELP"]
 version_file_path = os.path.expanduser(
@@ -56,6 +60,12 @@ def cli(ctx, verbose: bool, quiet: bool):
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
+    if check_for_wsl() == 1:
+        logger.error("\n" + config["TEXT"]["WINDOWS"] + "\n")
+    elif check_for_wsl() == 2:
+        logger.error("\n" + config["TEXT"]["MAC"] + "\n")
+    else:
+        logger.error("\n" + quotes[random.randint(0, len(quotes)-1)] + " - Linus Torvalds\n")
     check_files(config["DEFAULT"]["BASE_PATH"], config["DEFAULT"]["VERSION_FILE"])
 
 
