@@ -20,9 +20,14 @@ cache:
 
 before_script:
   - python -V  # Print out python version for debugging
-  - pip install virtualenv
+  - python -m pip install -U pip
+  - pip install virtualenv pylint
   - virtualenv venv
   - source venv/bin/activate
+
+lint:
+  script:
+    - pylint tgenv/
 
 test:
   script:
