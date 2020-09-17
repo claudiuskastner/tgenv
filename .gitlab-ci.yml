@@ -6,6 +6,10 @@ cache:
   paths:
     - .cache/pip
 
+include:
+  - template: Dependency-Scanning.gitlab-ci.yml
+
+
 before_script:
 <<<<<<< HEAD
 - python -V
