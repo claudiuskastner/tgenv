@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="tgenv",
-    version="1.0.0",
+    version="1.0.1",
     install_requires=["click", "requests", "tqdm", "PyGithub"],
     description="A tool for managing terragrunt versions",
     url="https://gitlab.com/claudiuskastner/tgenv",
