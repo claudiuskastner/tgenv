@@ -8,6 +8,7 @@ setup(
     url="https://gitlab.com/claudiuskastner/tgenv",
     author="Claudius Kastner",
     keywords="terragrunt terraform versioning",
+    author_email="claukast@gmail.com",
     data_files=[('config', ['tgenv/res/default.conf', 'tgenv/res/quotes'])],
     python_requires='>=3.8',
     include_package_data=True,
