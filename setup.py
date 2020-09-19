@@ -1,5 +1,11 @@
 from setuptools import setup
 
+with open('README.md') as f:
+    readme = f.read()
+
+with open('LICENSE') as f:
+    license = f.read()
+
 setup(
     name="tgenv",
     version="1.0.1",
@@ -11,6 +17,8 @@ setup(
     data_files=[('config', ['tgenv/res/default.conf', 'tgenv/res/quotes'])],
     python_requires='>=3.8',
     include_package_data=True,
+    long_description=readme,
+    license=license,
     packages=["tgenv"],
     entry_points={
         "console_scripts": [
