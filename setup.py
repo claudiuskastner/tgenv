@@ -4,7 +4,7 @@ with open('README.md') as f:
     readme = f.read()
 
 with open('LICENSE') as f:
-    license = f.read()
+    lice = f.read()
 
 setup(
     name="tgenv",
@@ -15,7 +15,7 @@ setup(
     author="Claudius Kastner",
     keywords="terragrunt terraform versioning",
     long_description=readme,
-    license=license,
+    license=lice,
     author_email="claukast@gmail.com",
     data_files=[('config', ['tgenv/res/default.conf', 'tgenv/res/quotes'])],
     python_requires='>=3.8',
