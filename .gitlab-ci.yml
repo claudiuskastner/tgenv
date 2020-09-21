@@ -11,11 +11,6 @@ cache:
     - .cache/pip
     - venv/
 
-include:
-  - template: Dependency-Scanning.gitlab-ci.yml
-  - template: Security/License-Scanning.gitlab-ci.yml
-  - template: SAST.gitlab-ci.yml
-
 before_script:
 - python -V
 - python -m pip install -U pip
