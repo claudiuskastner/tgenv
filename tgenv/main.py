@@ -1,4 +1,21 @@
 #!/bin/env python3
+
+"""    This file is part of tgenv.
+
+    tgenv is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    tgenv is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with tgenv.  If not, see <https://www.gnu.org/licenses/>."""
+
+
 # pylint: disable=unused-argument,logging-not-lazy
 
 import os
@@ -61,11 +78,12 @@ def cli(ctx, verbose: bool, quiet: bool):
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
-    if check_for_wsl() == 1:
+    show_fun = bool(config["USER"]["SHOW_STUFF"])
+    if check_for_wsl() == 1 and show_fun:
         logger.error("\n" + config["TEXT"]["WINDOWS"] + "\n")
-    elif check_for_wsl() == 2:
+    elif check_for_wsl() == 2 and show_fun:
         logger.error("\n" + config["TEXT"]["MAC"] + "\n")
-    else:
+    elif show_fun:
         logger.error("\n" + quotes[random.randint(0, len(quotes)-1)] + " - Linus Torvalds\n")
     check_files(config["DEFAULT"]["BASE_PATH"], config["DEFAULT"]["VERSION_FILE"])
 
@@ -148,11 +166,26 @@ def use(ctx, version: str):
     else:
         print("Not a valid version")
 
+@click.command()
+def show_license():
+    """ Prints the license text.
+    """
+    print(config["TEXT"]["LICENSE"])
+
+@click.command()
+def set_config():
+    """ Sets some user configuration
+    """
+    config["USER"]["SHOW_STUFF"] = "false"
+    with open(configuration_path, 'w') as configfile:
+        config.write(configfile)
 
 cli.add_command(list_remote)
 cli.add_command(install)
 cli.add_command(use)
 cli.add_command(list_local)
+cli.add_command(set_config)
+cli.add_command(show_license)
 
 if __name__ == "__main__":
     # pylint: disable=no-value-for-parameter
