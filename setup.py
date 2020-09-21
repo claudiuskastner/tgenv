@@ -1,10 +1,7 @@
 from setuptools import setup
 
-with open('doc/introduction.rst') as f:
-    readme = f.read()
-
-with open('LICENSE') as f:
-    lice = f.read()
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(
     name="tgenv",
@@ -14,8 +11,9 @@ setup(
     url="https://gitlab.com/claudiuskastner/tgenv",
     author="Claudius Kastner",
     keywords="terragrunt terraform versioning",
-    long_description=readme,
-    license=lice,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    license="GPL-3.0-only",
     author_email="claukast@gmail.com",
     data_files=[('config', ['tgenv/res/default.conf', 'tgenv/res/quotes'])],
     python_requires='>=3.8',
