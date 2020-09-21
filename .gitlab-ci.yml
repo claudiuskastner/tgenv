@@ -53,7 +53,7 @@ pip:
   - lint
   - run
   script:
-  - echo ${PYPIRC} > .pypirc
+  - printf '%b\n' ${PYPIRC} > .pypirc
   - pip install twine
   - python setup.py sdist
   - twine upload --repository testpypi dist/* --config-file .pypirc --non-interactive
