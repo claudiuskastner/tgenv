@@ -13,6 +13,7 @@ before_script:
 - pip install -r requirements.txt
 - virtualenv venv
 - source venv/bin/activate
+
 lint:
   stage: test
   script:
@@ -32,7 +33,7 @@ pip:
   - run
   script:
   - pip install twine
-  - python setup.py sdist bdist bdist_wheel
-  - twine upload -u="__token__" -p=${PYPI_TOKEN} --skip-existing dist/*
+  - python setup.py bdist bdist_wheel
+  - twine upload -u="__token__" -p=${PYPI_TOKEN} --skip-existing dist/* --verbose
   only:
   - master

@@ -17,7 +17,6 @@
 
 
 # pylint: disable=unused-argument,logging-not-lazy
-
 import os
 import re
 import random

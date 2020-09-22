@@ -79,5 +79,7 @@ def check_for_wsl() -> int:
     if os.path.exists("/mnt/c/Windows") or sys.platform == "Windows":
         retval = 1
     elif platform.system() == "Darwin":
+
+
         retval = 2
     return retval
