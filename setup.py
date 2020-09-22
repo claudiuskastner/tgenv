@@ -28,8 +28,7 @@ setup(
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
-        'License :: OSI Approved :: GPL-3.0-only',
-        'Operating System :: Linux',
+        'Operating System :: POSIX',
         'Programming Language :: Python',
     ]
 )
