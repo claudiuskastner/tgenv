@@ -34,6 +34,6 @@ pip:
   script:
   - pip install twine
   - python setup.py sdist bdist bdist_wheel
-  - twine upload -u="__token__" -p=${PYPI_TOKEN} --skip-existing dist/*
+  - twine upload -u="__token__" -p=${PYPI_TOKEN} --skip-existing dist/* --verbose
   only:
   - master
