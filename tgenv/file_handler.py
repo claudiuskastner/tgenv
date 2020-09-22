@@ -76,7 +76,7 @@ def check_for_wsl() -> int:
     """ Checks if running on wsl
     """
     retval = 0
-    if os.path.exists("/mnt/c/Windows") or sys.platform != "linux":
+    if os.path.exists("/mnt/c/Windows") or sys.platform == "Windows":
         retval = 1
     elif platform.system() == "Darwin":
         retval = 2
