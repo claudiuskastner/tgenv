@@ -87,7 +87,7 @@ def cli(ctx, verbose: bool, quiet: bool):
     else:
         logger.setLevel(logging.INFO)
     try:
-        show_fun = True if user_config["USER"]["show_stuff"] == "true" else False
+        show_fun = bool(user_config["USER"]["show_stuff"] == "true")
     except KeyError:
         show_fun = True
     if check_for_wsl() == 1 and show_fun:
@@ -203,6 +203,11 @@ cli.add_command(set_config)
 cli.add_command(show_license)
 
 def init_config(state="true"):
+    """Initializes a user configuration file
+
+    :param state: The state on which the only variable should be set to, defaults to "true"
+    :type state: str, optional
+    """
     user_config.add_section("USER")
     user_config["USER"]["SHOW_STUFF"] = state
     with open(user_config_path, 'w') as conf_file:
