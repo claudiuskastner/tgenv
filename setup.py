@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="tgenv",
-    version="1.0.3",
+    version="1.1.0",
     install_requires=["click", "requests", "tqdm", "PyGithub"],
     description="A tool for managing terragrunt versions",
     url="https://gitlab.com/claudiuskastner/tgenv",
@@ -16,12 +16,20 @@ setup(
     license="GPL-3.0-only",
     author_email="claukast@gmail.com",
     data_files=[('config', ['tgenv/res/default.conf', 'tgenv/res/quotes'])],
-    python_requires='>=3.8',
+    python_requires='>=3.6',
     include_package_data=True,
     packages=["tgenv"],
     entry_points={
         "console_scripts": [
             "tgenv=tgenv.main:cli",
         ]
-    }
+    },
+    classifiers=[
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: System Administrators',
+        'License :: OSI Approved :: GPL-3.0-only',
+        'Operating System :: Linux',
+        'Programming Language :: Python',
+    ]
 )
