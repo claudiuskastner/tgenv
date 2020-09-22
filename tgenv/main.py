@@ -43,15 +43,23 @@ log_handler.setFormatter(ConsoleLoggingFormat())
 logger.addHandler(log_handler)
 
 config = configparser.ConfigParser()
+
 configuration_path = os.path.join(os.path.dirname(__file__), "res/default.conf")
 config.read(configuration_path)
 
 quotes = open(os.path.join(os.path.dirname(__file__), "res/quotes"), "r").read().splitlines()
 
 help_content = "\b" + config["TEXT"]["HELP"]
-version_file_path = os.path.expanduser(
-    config["DEFAULT"]["BASE_PATH"] + config["DEFAULT"]["VERSION_FILE"]
-)
+
+base_path = config["DEFAULT"]["BASE_PATH"]
+version_file_path = os.path.expanduser(base_path + config["DEFAULT"]["VERSION_FILE"])
+user_config_path = os.path.expanduser(base_path + config["DEFAULT"]["config_file"])
+user_config = configparser.ConfigParser()
+try:
+    user_config.read(user_config_path)
+except KeyError as ex:
+    init_config()
+
 versions_path = os.path.expanduser(config["DEFAULT"]["BASE_PATH"] + "versions/")
 
 @click.group(help=help_content)
@@ -68,6 +76,7 @@ def cli(ctx, verbose: bool, quiet: bool):
     :type quiet: bool
     """
     ctx.obj = {}
+    user_config.read(user_config_path)
 
     ctx.verbose = verbose
     ctx.quiet = quiet
@@ -77,7 +86,10 @@ def cli(ctx, verbose: bool, quiet: bool):
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
-    show_fun = bool(config["USER"]["SHOW_STUFF"])
+    try:
+        show_fun = bool(user_config["USER"]["show_stuff"] == "true")
+    except KeyError:
+        show_fun = True
     if check_for_wsl() == 1 and show_fun:
         logger.error("\n" + config["TEXT"]["WINDOWS"] + "\n")
     elif check_for_wsl() == 2 and show_fun:
@@ -172,12 +184,16 @@ def show_license():
     print(config["TEXT"]["LICENSE"])
 
 @click.command()
-def set_config():
+@click.argument("show_quotes", type=click.STRING)
+def set_config(show_quotes):
     """ Sets some user configuration
     """
-    config["USER"]["SHOW_STUFF"] = "false"
-    with open(configuration_path, 'w') as configfile:
-        config.write(configfile)
+    try:
+        user_config["USER"]["SHOW_STUFF"] = show_quotes
+    except KeyError:
+        init_config("false")
+    with open(user_config_path, 'w') as conf_file:
+        user_config.write(conf_file)
 
 cli.add_command(list_remote)
 cli.add_command(install)
@@ -185,6 +201,17 @@ cli.add_command(use)
 cli.add_command(list_local)
 cli.add_command(set_config)
 cli.add_command(show_license)
+
+def init_config(state="true"):
+    """Initializes a user configuration file
+
+    :param state: The state on which the only variable should be set to, defaults to "true"
+    :type state: str, optional
+    """
+    user_config.add_section("USER")
+    user_config["USER"]["SHOW_STUFF"] = state
+    with open(user_config_path, 'w') as conf_file:
+        user_config.write(conf_file)
 
 if __name__ == "__main__":
     # pylint: disable=no-value-for-parameter
