@@ -229,17 +229,6 @@ def init_config(state="true"):
     with open(user_config_path, 'w') as conf_file:
         user_config.write(conf_file)
 
-def init_config(state="true"):
-    """Initializes a user configuration file
-
-    :param state: The state on which the only variable should be set to, defaults to "true"
-    :type state: str, optional
-    """
-    user_config.add_section("USER")
-    user_config["USER"]["SHOW_STUFF"] = state
-    with open(user_config_path, 'w') as conf_file:
-        user_config.write(conf_file)
-
 if __name__ == "__main__":
     # pylint: disable=no-value-for-parameter
     cli()
