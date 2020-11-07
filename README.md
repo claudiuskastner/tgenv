@@ -26,6 +26,10 @@ pip install tgenv
   ```bash
   tgenv install v0.24.4
   ```
+- Show current version
+  ```bash
+  tgenv current
+  ```
 - Use an installed version
   ```bash
   tgenv use v0.24.4
