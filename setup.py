@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="tgenv",
-    version="1.1.0",
+    version="1.2.0",
     install_requires=["click", "requests", "tqdm", "PyGithub"],
     description="A tool for managing terragrunt versions",
     url="https://gitlab.com/claudiuskastner/tgenv",
