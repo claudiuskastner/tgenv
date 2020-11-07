@@ -27,7 +27,8 @@ import click
 
 from .asset_downloader import DownloadException
 from .git_wrapper import get_release_asset, get_versions
-from .version_handler import has_version, add_version, install_version, get_local_versions
+from .version_handler import has_version, add_version, install_version
+from .version_handler import get_local_versions, get_current_version, set_current_version
 from .file_handler import check_files, check_for_wsl
 from .console_logger_format import ConsoleLoggingFormat
 
@@ -125,8 +126,13 @@ def list_local(ctx):
     """ Returns all local versions
     """
     versions = get_local_versions(version_file_path)
+    active = versions["active"]
+    del versions["active"]
     for version in versions:
-        logger.error(version)
+        if version == active:
+            logger.error("* " +  version)
+        else:
+            logger.error(version)
 
 
 @click.command(help=config["TEXT"]["INSTALL_HELP"])
@@ -172,6 +178,7 @@ def use(ctx, version: str):
     if re.match(r'v+[0-9]+\.[0-9]+\.+[0-9]*', version):
         if has_version(version_file_path, version):
             install_version(config["DEFAULT"]["BINARY_TARGET"], versions_path, version)
+            set_current_version(version_file_path, version)
         else:
             print("No local version %s present" % version)
     else:
@@ -195,12 +202,21 @@ def set_config(show_quotes):
     with open(user_config_path, 'w') as conf_file:
         user_config.write(conf_file)
 
+@click.command(help=config["TEXT"]["CURRENT_VERSION"])
+@click.pass_context
+def current(ctx):
+    """ Shows the current active version
+    :param ctx: click context
+    """
+    logger.info(get_current_version(version_file_path))
+
 cli.add_command(list_remote)
 cli.add_command(install)
 cli.add_command(use)
 cli.add_command(list_local)
 cli.add_command(set_config)
 cli.add_command(show_license)
+cli.add_command(current)
 
 def init_config(state="true"):
     """Initializes a user configuration file
