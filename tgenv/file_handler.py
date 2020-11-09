@@ -16,7 +16,6 @@
 import os
 import sys
 import stat
-import shutil
 import platform
 
 def write_version(file_path: str, versions: str):
@@ -49,10 +48,10 @@ def copy_file(source: str, dest: str) -> bool:
     """ Copies a file from dest to source and gives executable rights
     """
     abs_path =  os.path.expanduser(dest)
-    if not os.path.isfile(abs_path):
-        with open(abs_path, "w") as file:
-            file.write("")
-    shutil.copyfile(source, abs_path)
+
+    if os.path.isfile(abs_path):
+        os.remove(abs_path)
+    os.symlink(source, abs_path)
     perm_state = os.stat(abs_path)
     os.chmod(abs_path, perm_state.st_mode | stat.S_IXUSR)
 
